@@ -1,1 +1,2 @@
-# Music-visualizer
+# Audio-visualizer
+A desktop audio visualizer that captures system audio (WASAPI on Windows, PipeWire on Linux), renders ProjectM/MilkDrop visualizations, detects beats smoothly, displays synchronized lyrics from LRCLib, and runs in the background with a system tray.
