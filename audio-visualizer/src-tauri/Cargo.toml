@@ -1,25 +1,47 @@
 [package]
 name = "audio-visualizer"
 version = "0.1.0"
-description = "A Tauri App"
+description = "A cross-platform audio visualizer with system audio capture, ProjectM visualizations, beat detection, and synchronized lyrics"
 authors = ["you"]
 edition = "2021"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 [lib]
-# The `_lib` suffix may seem redundant but it is necessary
-# to make the lib name unique and wouldn't conflict with the bin name.
-# This seems to be only an issue on Windows, see https://github.com/rust-lang/cargo/issues/8519
 name = "audio_visualizer_lib"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
 [build-dependencies]
 tauri-build = { version = "2", features = [] }
+pkg-config = "0.3"
 
 [dependencies]
-tauri = { version = "2", features = [] }
+tauri = { version = "2.0", features = ["tray-icon", "devtools"] }
 tauri-plugin-opener = "2"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
+
+tokio = { version = "1.38", features = ["full"] }
+dashmap = "5.5"       # Our "In-Memory Database" replacement
+parking_lot = "0.12"
+
+cpal = "0.15"
+rustfft = "6.2"
+reqwest = { version = "0.12", features = ["json"] }
+projectm = "1.0"
+
+openh264 = "0.6"
+log = "0.4"
+env_logger = "0.10"
+
+[target.'cfg(windows)'.dependencies]
+windows = { version = "0.52", features = [
+    "Foundation",
+    "Win32_Foundation",
+    "Media",
+    "Media_Control",
+    "Win32_System_Com",
+    "Win32_UI_WindowsAndMessaging",
+] }
+
+[target.'cfg(target_os = "linux")'.dependencies]
+zbus = "3.14"
 
